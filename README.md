@@ -13,7 +13,7 @@ Install the required tools:
 brew install tmux hammerspoon
 ```
 
-Install Claude Code:
+Install Claude Code and log in/register:
 https://code.claude.com/docs/en/quickstart
 
 ### 2. Session Persistence with Tmux
