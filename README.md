@@ -27,8 +27,12 @@ To prevent your Claude session from closing when you exit the terminal or lose c
 
 ### 3. Automating with Hammerspoon
 Hammerspoon uses Lua to watch system events. This ensures that when you arrive at your designated workspace (e.g., your home office Wi-Fi), the agent starts automatically.
-* Install Hammerspoon from hammerspoon.org and move it to your Applications folder.
 * Open Hammerspoon, click the icon in the menu bar, and select Open Config File.
+* If the file doesnt exists please run the following command:
+  ```bash
+   mkdir -p ~/.config/nvim && vim ~/.config/nvim/init.lua
+  ```
+  press i (INSERT)
 * Paste the following logic into your ```init.lua``` file:
 
     ```Lua
