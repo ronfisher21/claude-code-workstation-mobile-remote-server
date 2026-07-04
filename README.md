@@ -13,6 +13,9 @@ Install the required tools:
 brew install tmux hammerspoon
 ```
 
+Install Claude Code:
+https://code.claude.com/docs/en/quickstart
+
 ### 2. Session Persistence with Tmux
 To prevent your Claude session from closing when you exit the terminal or lose connection, we use tmux.
 * Open your terminal
