@@ -20,7 +20,8 @@ https://code.claude.com/docs/en/quickstart
 To prevent your Claude session from closing when you exit the terminal or lose connection, we use tmux.
 * Open your terminal
 * Create a new session named claude-dev: ```tmux new-session -s claude-dev```
-* Inside this session, launch the agent: ```claude remote-control```
+* Inside this session, launch the agent (make sure you the following command NOT in "/home/your-user" or on "~/"):
+   ```claude remote-control```
 * To "detach" from the session (leaving it running in the background), press Ctrl+B then D.
 * To return to this session later, run: ```tmux attach -t claude-dev```
 
