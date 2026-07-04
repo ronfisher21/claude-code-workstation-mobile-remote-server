@@ -61,8 +61,15 @@ Hammerspoon uses Lua to watch system events. This ensures that when you arrive a
 To treat your Mac as a true server, it must remain awake even when the display is off.
 
 #### Preventing Sleep:
-* **Quick Fix**: Open your terminal and run ```caffeinate -i```. This command prevents the system from entering idle sleep while the terminal window is active.
-* **Permanent Fix**: Use an application like KeepingYouAwake (a GUI wrapper for ```caffeinate```). Enable it when you plug in your MacBook to ensure the machine never sleeps while connected to power.
+* Use an application like KeepingYouAwake (a GUI wrapper for ```caffeinate```). Enable it when you plug in your MacBook to ensure the machine never sleeps while connected to power.
+You can download it in the following link:
+https://keepingyouawake.app
+* Select the cup icon and enter settings.
+* Go to Advanced and tick the "Allow the display to sleep" box.
+* Go to macOs system setting:
+  * battery => options
+  * toggle ON "Prevent automatic sleeping on power adapter when the display if off."
+
 
 #### Workspace Trust:
 * Claude Code requires explicit permission to interact with your local folders. Open your terminal, navigate to your target project folder, and run ```claude``` once manually.
