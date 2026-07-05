@@ -36,24 +36,48 @@ Hammerspoon uses Lua to watch system events. This ensures that when you arrive a
 * Paste the following logic into your ```init.lua``` file:
 
     ```Lua
-        -- Function to reset and start the agent
-        local function startClaude()
-            -- Kill any stale processes to avoid "Port Busy" errors
-            os.execute("killall claude") 
-            -- Start a new detached tmux session running Claude
-            os.execute("tmux new-session -d -s claude-dev 'claude       remote-control'")
-        end
-
-        -- Watcher for your Wi-Fi network
-        local wifiWatcher = hs.wifi.watcher.new(function()
-            local currentSSID = hs.wifi.currentNetwork()
-            -- Replace 'YOUR_WIFI_NAME' with your trusted network SSID
-            if currentSSID == "YOUR_WIFI_NAME" then
-                startClaude()
-            end
-        end)
-
-        wifiWatcher:start()
+         -- Trusted networks: modify and/or add your wifi network
+         local trustedNetworks = {
+             ["MY-HOME-WIFI"] = true,
+             -- ["MY_WORK-WIFI"] = true,
+             -- ["HOME_BACKUP"] = true,
+         }
+         
+         hs.location.start()
+         
+         local isStarting = false
+         
+         local function startClaude()
+             if isStarting then return end
+             isStarting = true
+             os.execute("killall claude")
+             os.execute("tmux kill-session -t claude-dev 2>/dev/null; sleep 0.5")
+         
+             -- check with "which claude" and "which tmux" your claude and tmux directories and put them below in the directories before tmux/claude commands
+             os.execute("/opt/homebrew/bin/tmux new-session -d -s claude-dev '/opt/homebrew/bin/claude remote-control' >> /tmp/claude-hammerspoon.log 2>&1")
+             hs.alert.show("✅ Claude remote-control session started")
+         
+             isStarting = false
+         end
+         
+         
+         local function checkConditions()
+             local currentSSID = hs.wifi.currentNetwork()
+             local onTrustedWifi = currentSSID ~= nil and trustedNetworks[currentSSID] == true
+             local onACPower = hs.battery.powerSource() == "AC Power"
+         
+             if onTrustedWifi and onACPower then
+                 startClaude()
+             end
+         end
+         
+         local wifiWatcher = hs.wifi.watcher.new(checkConditions)
+         wifiWatcher:start()
+         
+         local powerWatcher = hs.battery.watcher.new(checkConditions)
+         powerWatcher:start()
+         
+         checkConditions()
     ```
 
 
